@@ -32,26 +32,26 @@ import com.ibm.intoto.attestation.utils.Utils;
  */
 public class FileResourcesDescriptor extends ResourceDescriptor {
 
-    public FileResourcesDescriptor(File war) throws WarFileException {
+    public FileResourcesDescriptor(File packageName) throws WarFileException {
         try {
-            if (war == null) {
+            if (packageName == null) {
                 throw new FileNullException();
             }
-            if (!war.exists()) {
-                throw new FileDoesNotExistException(war.getAbsolutePath());
+            if (!packageName.exists()) {
+                throw new FileDoesNotExistException(packageName.getAbsolutePath());
             }
-            if (!war.isFile()) {
-                throw new NotAFileException(war.getAbsolutePath());
+            if (!packageName.isFile()) {
+                throw new NotAFileException(packageName.getAbsolutePath());
             }
-            this.name = war.getName();
-            calculateWarDigest(war);
+            this.name = packageName.getName();
+            calculateWarDigest(packageName);
         } catch (Exception e) {
             throw new WarFileException(e.getMessage());
         }
     }
 
-    private void calculateWarDigest(File war) throws DigestCalculationException {
-        String hash = Utils.calculateSha256ForFile(war);
+    private void calculateWarDigest(File packageName) throws DigestCalculationException {
+        String hash = Utils.calculateSha256ForFile(packageName);
         digest.put(DigestSet.ALG_SHA256, hash);
     }
 
