@@ -30,9 +30,9 @@ import com.ibm.intoto.attestation.utils.Utils;
 /**
  * A ResourceDescriptor type to encapsulate the WAR file created from a Maven project.
  */
-public class WarResourceDescriptor extends ResourceDescriptor {
+public class FileResourcesDescriptor extends ResourceDescriptor {
 
-    public WarResourceDescriptor(File war) throws WarFileException {
+    public FileResourcesDescriptor(File war) throws WarFileException {
         try {
             if (war == null) {
                 throw new FileNullException();

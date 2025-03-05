@@ -31,7 +31,7 @@ import com.ibm.intoto.test.CommonTestUtils;
 import com.ibm.intoto.test.Constants;
 import jakarta.json.JsonObject;
 
-public class WarResourceDescriptorTest {
+public class FileResourcesDescriptorTest {
 
     private CommonTestUtils testUtils = new CommonTestUtils();
 
@@ -39,7 +39,7 @@ public class WarResourceDescriptorTest {
     public void test_constructor_fileNull() {
         final File file = null;
         try {
-            new WarResourceDescriptor(file);
+            new FileResourcesDescriptor(file);
             fail("Should have thrown an exception but didn't.");
         } catch (WarFileException e) {
             // Expected
@@ -51,7 +51,7 @@ public class WarResourceDescriptorTest {
     public void test_constructor_fileIsDir() {
         final File file = new File(Constants.RESOURCES_DIR);
         try {
-            new WarResourceDescriptor(file);
+            new FileResourcesDescriptor(file);
             fail("Should have thrown an exception but didn't.");
         } catch (WarFileException e) {
             // Expected
@@ -63,7 +63,7 @@ public class WarResourceDescriptorTest {
     public void test_constructor_fileDoesNotExist() {
         final File file = new File(Constants.RESOURCES_DIR + File.separator + "does-not-exist");
         try {
-            new WarResourceDescriptor(file);
+            new FileResourcesDescriptor(file);
             fail("Should have thrown an exception but didn't.");
         } catch (WarFileException e) {
             // Expected
@@ -78,7 +78,7 @@ public class WarResourceDescriptorTest {
     public void test_constructor_fileNotWar() {
         final File file = new File(Constants.FILE_PATH_SIMPLE_TXT);
         try {
-            WarResourceDescriptor descriptor = new WarResourceDescriptor(file);
+            FileResourcesDescriptor descriptor = new FileResourcesDescriptor(file);
 
             assertEquals(Constants.FILE_NAME_SIMPLE_TXT, descriptor.getName());
 
