@@ -44,13 +44,13 @@ public class FileResourcesDescriptor extends ResourceDescriptor {
                 throw new NotAFileException(packageName.getAbsolutePath());
             }
             this.name = packageName.getName();
-            calculateWarDigest(packageName);
+            calculateDigest(packageName);
         } catch (Exception e) {
             throw new WarFileException(e.getMessage());
         }
     }
 
-    private void calculateWarDigest(File packageName) throws DigestCalculationException {
+    private void calculateDigest(File packageName) throws DigestCalculationException {
         String hash = Utils.calculateSha256ForFile(packageName);
         digest.put(DigestSet.ALG_SHA256, hash);
     }
