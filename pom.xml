@@ -4,7 +4,7 @@
 
     <groupId>com.ibm.websphere.appserver.features</groupId>
     <artifactId>intoto4j</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <name>intoto4j</name>
     <description>The intoto4j library provides Java tools and classes for generating artifacts consistent with the in-toto (https://in-toto.io/) framework.</description>
