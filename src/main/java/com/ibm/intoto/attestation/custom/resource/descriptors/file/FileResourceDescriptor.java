@@ -28,7 +28,7 @@ import com.ibm.intoto.attestation.exceptions.NotAFileException;
 import com.ibm.intoto.attestation.utils.Utils;
 
 /**
- * A ResourceDescriptor type to encapsulate the WAR file created from a Maven project.
+ * A ResourceDescriptor type to encapsulate the package file created from a Maven project.
  */
 public class FileResourceDescriptor extends ResourceDescriptor {
 
