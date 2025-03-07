@@ -20,7 +20,7 @@ import java.io.File;
 
 import com.ibm.intoto.attestation.DigestSet;
 import com.ibm.intoto.attestation.ResourceDescriptor;
-import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.WarFileException;
+import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.ResourceFileException;
 import com.ibm.intoto.attestation.exceptions.DigestCalculationException;
 import com.ibm.intoto.attestation.exceptions.FileDoesNotExistException;
 import com.ibm.intoto.attestation.exceptions.FileNullException;
@@ -30,9 +30,9 @@ import com.ibm.intoto.attestation.utils.Utils;
 /**
  * A ResourceDescriptor type to encapsulate the WAR file created from a Maven project.
  */
-public class FileResourcesDescriptor extends ResourceDescriptor {
+public class FileResourceDescriptor extends ResourceDescriptor {
 
-    public FileResourcesDescriptor(File packageName) throws WarFileException {
+    public FileResourceDescriptor(File packageName) throws ResourceFileException {
         try {
             if (packageName == null) {
                 throw new FileNullException();
@@ -46,7 +46,7 @@ public class FileResourcesDescriptor extends ResourceDescriptor {
             this.name = packageName.getName();
             calculateDigest(packageName);
         } catch (Exception e) {
-            throw new WarFileException(e.getMessage());
+            throw new ResourceFileException(e.getMessage());
         }
     }
 

@@ -26,12 +26,12 @@ import java.io.File;
 import org.junit.jupiter.api.Test;
 
 import com.ibm.intoto.attestation.DigestSet;
-import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.WarFileException;
+import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.ResourceFileException;
 import com.ibm.intoto.test.CommonTestUtils;
 import com.ibm.intoto.test.Constants;
 import jakarta.json.JsonObject;
 
-public class FileResourcesDescriptorTest {
+public class FileResourceDescriptorTest {
 
     private CommonTestUtils testUtils = new CommonTestUtils();
 
@@ -39,9 +39,9 @@ public class FileResourcesDescriptorTest {
     public void test_constructor_fileNull() {
         final File file = null;
         try {
-            new FileResourcesDescriptor(file);
+            new FileResourceDescriptor(file);
             fail("Should have thrown an exception but didn't.");
-        } catch (WarFileException e) {
+        } catch (ResourceFileException e) {
             // Expected
             testUtils.assertExceptionMatchesPattern(e, "file object is null");
         }
@@ -51,9 +51,9 @@ public class FileResourcesDescriptorTest {
     public void test_constructor_fileIsDir() {
         final File file = new File(Constants.RESOURCES_DIR);
         try {
-            new FileResourcesDescriptor(file);
+            new FileResourceDescriptor(file);
             fail("Should have thrown an exception but didn't.");
-        } catch (WarFileException e) {
+        } catch (ResourceFileException e) {
             // Expected
             testUtils.assertExceptionMatchesPattern(e, "artifact is not a file");
         }
@@ -63,9 +63,9 @@ public class FileResourcesDescriptorTest {
     public void test_constructor_fileDoesNotExist() {
         final File file = new File(Constants.RESOURCES_DIR + File.separator + "does-not-exist");
         try {
-            new FileResourcesDescriptor(file);
+            new FileResourceDescriptor(file);
             fail("Should have thrown an exception but didn't.");
-        } catch (WarFileException e) {
+        } catch (ResourceFileException e) {
             // Expected
             testUtils.assertExceptionMatchesPattern(e, "file does not exist");
         }
@@ -78,7 +78,7 @@ public class FileResourcesDescriptorTest {
     public void test_constructor_fileNotWar() {
         final File file = new File(Constants.FILE_PATH_SIMPLE_TXT);
         try {
-            FileResourcesDescriptor descriptor = new FileResourcesDescriptor(file);
+            FileResourceDescriptor descriptor = new FileResourceDescriptor(file);
 
             assertEquals(Constants.FILE_NAME_SIMPLE_TXT, descriptor.getName());
 
@@ -92,7 +92,7 @@ public class FileResourcesDescriptorTest {
             assertNull(descriptor.getDownloadLocation(), "Download location should have been null but was: " + descriptor.getDownloadLocation());
             assertNull(descriptor.getMediaType(), "Media type should have been null but was: " + descriptor.getMediaType());
             assertNull(descriptor.getUri(), "URI should have been null but was: " + descriptor.getUri());
-        } catch (WarFileException e) {
+        } catch (ResourceFileException e) {
             fail("Caught an unexpected exception: " + e);
         }
     }

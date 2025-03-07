@@ -16,11 +16,11 @@
 */
 package com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions;
 
-public class WarFileException extends Exception {
+public class ResourceFileException extends Exception {
 
     private static final String ERROR_MSG = "An error occurred while processing a WAR file: %s";
 
-    public WarFileException(String errorMsg) {
+    public ResourceFileException(String errorMsg) {
         super(String.format(ERROR_MSG, errorMsg));
     }
 
