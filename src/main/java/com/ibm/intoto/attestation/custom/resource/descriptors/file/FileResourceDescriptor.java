@@ -20,7 +20,7 @@ import java.io.File;
 
 import com.ibm.intoto.attestation.DigestSet;
 import com.ibm.intoto.attestation.ResourceDescriptor;
-import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.WarFileException;
+import com.ibm.intoto.attestation.custom.resource.descriptors.file.exceptions.ResourceFileException;
 import com.ibm.intoto.attestation.exceptions.DigestCalculationException;
 import com.ibm.intoto.attestation.exceptions.FileDoesNotExistException;
 import com.ibm.intoto.attestation.exceptions.FileNullException;
@@ -28,30 +28,30 @@ import com.ibm.intoto.attestation.exceptions.NotAFileException;
 import com.ibm.intoto.attestation.utils.Utils;
 
 /**
- * A ResourceDescriptor type to encapsulate the WAR file created from a Maven project.
+ * A ResourceDescriptor type to encapsulate the package file created from a Maven project.
  */
-public class WarResourceDescriptor extends ResourceDescriptor {
+public class FileResourceDescriptor extends ResourceDescriptor {
 
-    public WarResourceDescriptor(File war) throws WarFileException {
+    public FileResourceDescriptor(File packageName) throws ResourceFileException {
         try {
-            if (war == null) {
+            if (packageName == null) {
                 throw new FileNullException();
             }
-            if (!war.exists()) {
-                throw new FileDoesNotExistException(war.getAbsolutePath());
+            if (!packageName.exists()) {
+                throw new FileDoesNotExistException(packageName.getAbsolutePath());
             }
-            if (!war.isFile()) {
-                throw new NotAFileException(war.getAbsolutePath());
+            if (!packageName.isFile()) {
+                throw new NotAFileException(packageName.getAbsolutePath());
             }
-            this.name = war.getName();
-            calculateWarDigest(war);
+            this.name = packageName.getName();
+            calculateDigest(packageName);
         } catch (Exception e) {
-            throw new WarFileException(e.getMessage());
+            throw new ResourceFileException(e.getMessage());
         }
     }
 
-    private void calculateWarDigest(File war) throws DigestCalculationException {
-        String hash = Utils.calculateSha256ForFile(war);
+    private void calculateDigest(File packageName) throws DigestCalculationException {
+        String hash = Utils.calculateSha256ForFile(packageName);
         digest.put(DigestSet.ALG_SHA256, hash);
     }
 
