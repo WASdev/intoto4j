@@ -16,6 +16,8 @@
 */
 package com.ibm.intoto.attestation.custom.resource.descriptors.maven;
 
+import java.util.Objects;
+
 import org.apache.maven.model.Dependency;
 
 import com.ibm.intoto.attestation.ResourceDescriptor;
@@ -67,6 +69,21 @@ public class MavenArtifactResourceDescriptor extends ResourceDescriptor {
         Utils.addIfNonNullAndNotEmpty(type, "type", annotationsBuilder);
         Utils.addIfNonNullAndNotEmpty(scope, "scope", annotationsBuilder);
         annotations = annotationsBuilder.build();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof MavenArtifactResourceDescriptor)) return false;
+        MavenArtifactResourceDescriptor other = (MavenArtifactResourceDescriptor) obj;
+        return Objects.equals(groupId, other.groupId) &&
+               Objects.equals(artifactId, other.artifactId) &&
+               Objects.equals(version, other.version);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupId, artifactId, version);
     }
 
 }
