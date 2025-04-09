@@ -78,12 +78,17 @@ public class MavenArtifactResourceDescriptor extends ResourceDescriptor {
         MavenArtifactResourceDescriptor other = (MavenArtifactResourceDescriptor) obj;
         return Objects.equals(groupId, other.groupId) &&
                Objects.equals(artifactId, other.artifactId) &&
-               Objects.equals(version, other.version);
+               Objects.equals(version, other.version) &&
+               Objects.equals(type, other.type) &&
+               Objects.equals(scope, other.scope) &&
+               Objects.equals(name, other.name) &&
+               Objects.equals(uri, other.uri) &&
+               Objects.equals(annotations, other.annotations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, artifactId, version);
+        return Objects.hash(groupId, artifactId, version, type, scope, name, uri, annotations);
     }
 
 }
