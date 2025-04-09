@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 International Business Machines Corp.
+ * Copyright 2023, 2025 International Business Machines Corp.
  * 
  * See the NOTICE file distributed with this work for additional information
  * regarding copyright ownership. Licensed under the Apache License, 
@@ -72,7 +72,7 @@ public class MavenArtifactResourceDescriptorTest {
     private void assertDescriptorMatchesDependency(MavenArtifactResourceDescriptor descriptor, String groupId, String artifactId, String version, String scope, String type) {
         String expectedName = groupId + ":" + artifactId + ":" + version;
         assertEquals(expectedName, descriptor.getName(), "Name did not match the expected value.");
-        String expectedUri = String.format(MavenArtifactResourceDescriptor.URI_FORMAT, groupId, artifactId, version);
+        String expectedUri = String.format(MavenArtifactResourceDescriptor.URI_FORMAT, groupId.replace(".","/"), artifactId, version);
         assertEquals(expectedUri, descriptor.getUri(), "URI did not match the expected value.");
 
         DigestSet digest = descriptor.getDigest();
@@ -86,6 +86,26 @@ public class MavenArtifactResourceDescriptorTest {
         JsonObject expectedAnnotations = annotationsBuilder.build();
         assertEquals(expectedAnnotations, descriptor.getAnnotations(), "Annotations did not match the expected value.");
 
+        assertNull(descriptor.getContent(), "Content should have been null but was: " + descriptor.getContent());
+        assertNull(descriptor.getDownloadLocation(), "Download location should have been null but was: " + descriptor.getDownloadLocation());
+        assertNull(descriptor.getMediaType(), "Media type should have been null but was: " + descriptor.getMediaType());
+    }
+    
+    // Testing that the MavenArtifactResourceDescriptor() object initialization is not causing an exception
+    // even if the Dependency object or its parameters are null. This is an edge case which is not expected 
+    // in practice. Test is added to ensure bad paths do not cause unexpected exceptions.
+    @Test
+    public void test_emptyDependency() {
+        final Dependency dependency = new Dependency();
+        MavenArtifactResourceDescriptor descriptor = new MavenArtifactResourceDescriptor(dependency);
+        assertNotNull(descriptor, "Object should not have been null but was.");
+        
+        DigestSet digest = descriptor.getDigest();
+        assertNotNull(digest, "Digest set should not have been null but was.");
+        JsonObject digestJson = digest.build();
+        assertTrue(digestJson.isEmpty(), "Digest set should have been empty but was: " + digestJson);
+      
+        assertNull(descriptor.getUri(), "URI should have been null but was: " + descriptor.getUri());
         assertNull(descriptor.getContent(), "Content should have been null but was: " + descriptor.getContent());
         assertNull(descriptor.getDownloadLocation(), "Download location should have been null but was: " + descriptor.getDownloadLocation());
         assertNull(descriptor.getMediaType(), "Media type should have been null but was: " + descriptor.getMediaType());
