@@ -58,8 +58,7 @@ public class MavenArtifactResourceDescriptor extends ResourceDescriptor {
             return String.format(URI_FORMAT, groupId.replace(".","/"), artifactId, version);
         }
         catch (NullPointerException e){
-            // Group ID is empty — this is an empty dependency, returning null.
-            // Note: There are tests in the slsa-maven-plugin repo with empty dependencies.
+            // String.replace() would throw a NullPointerException if the string is null.
             return null;
         }
     }
