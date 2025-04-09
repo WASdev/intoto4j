@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 International Business Machines Corp.
+ * Copyright 2023, 2025 International Business Machines Corp.
  * 
  * See the NOTICE file distributed with this work for additional information
  * regarding copyright ownership. Licensed under the Apache License, 
@@ -32,7 +32,7 @@ public class MavenArtifactResourceDescriptor extends ResourceDescriptor {
     public static final String KEY_ANNOTATION_SCOPE = "scope";
 
     // TODO
-    public static final String URI_FORMAT = "https://central.sonatype.com/artifact/%s/%s/%s";
+    public static final String URI_FORMAT = "https://repo1.maven.org/maven2/%s/%s/%s";
 
     private String groupId = null;
     private String artifactId = null;
@@ -47,8 +47,19 @@ public class MavenArtifactResourceDescriptor extends ResourceDescriptor {
         this.type = artifact.getType();
         this.scope = artifact.getScope();
         this.name = groupId + ":" + artifactId + ":" + version;
-        this.uri = String.format(URI_FORMAT, groupId, artifactId, version);
+        this.uri = resourceURIGenerator(groupId, artifactId, version);
         setAnnotations();
+    }
+
+    private String resourceURIGenerator(String groupId, String artifactId, String version){
+        try{
+            return String.format(URI_FORMAT, groupId.replace(".","/"), artifactId, version);
+        }
+        catch (NullPointerException e){
+            // Group ID is empty — this is an empty dependency, returning null.
+            // Note: There are tests in the slsa-maven-plugin repo with empty dependencies.
+            return null;
+        }
     }
 
     private void setAnnotations() {

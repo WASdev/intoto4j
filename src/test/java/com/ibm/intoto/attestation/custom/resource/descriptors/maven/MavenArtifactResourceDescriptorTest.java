@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 International Business Machines Corp.
+ * Copyright 2023, 2025 International Business Machines Corp.
  * 
  * See the NOTICE file distributed with this work for additional information
  * regarding copyright ownership. Licensed under the Apache License, 
@@ -72,7 +72,7 @@ public class MavenArtifactResourceDescriptorTest {
     private void assertDescriptorMatchesDependency(MavenArtifactResourceDescriptor descriptor, String groupId, String artifactId, String version, String scope, String type) {
         String expectedName = groupId + ":" + artifactId + ":" + version;
         assertEquals(expectedName, descriptor.getName(), "Name did not match the expected value.");
-        String expectedUri = String.format(MavenArtifactResourceDescriptor.URI_FORMAT, groupId, artifactId, version);
+        String expectedUri = String.format(MavenArtifactResourceDescriptor.URI_FORMAT, groupId.replace(".","/"), artifactId, version);
         assertEquals(expectedUri, descriptor.getUri(), "URI did not match the expected value.");
 
         DigestSet digest = descriptor.getDigest();
