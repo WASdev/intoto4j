@@ -37,7 +37,7 @@ public class GitUtils {
     /**
      * Regex Pattern for extracting the owner and repositiory name from a Git remote URL in the format https://github.com/<owner>/<repo-name>.git
      */
-    public static final Pattern GIT_REPO_OWNER_AND_NAME_PATTERN_HTTP = Pattern.compile("^https?://(www.)?github.(ibm.)?com/(?<" + REGEX_GROUP_NAME_OWNER + ">[^\\/]+)\\/(?<" + REGEX_GROUP_NAME_REPO_NAME + ">.+).git$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern GIT_REPO_OWNER_AND_NAME_PATTERN_HTTP = Pattern.compile("^https?://(?:[^@]+@)?(www.)?github.(ibm.)?com/(?<" + REGEX_GROUP_NAME_OWNER + ">[^\\/]+)\\/(?<" + REGEX_GROUP_NAME_REPO_NAME + ">.+).git$", Pattern.CASE_INSENSITIVE);
 
     public static final String GITHUB_REPO_URL_FORMAT = "https://github.com/%s/%s";
 
