@@ -174,4 +174,72 @@ public class GitRepositoryResourceDescriptorTest {
         }
     }
 
+    @Test
+    public void test_refWithHttpGitRepoUrlUsingUsernameAndToken() {
+        final String repoUrl = "https://gitclientuser:ghd_AZTjAqHeRgitclienttokenS86VDZCA2ptGcA@github.com/" + user + "/" + repoName +".git";
+        final String expectedGitRepoUri = "https://github.com/" + user + "/" + repoName;
+        final String ref = "refs/heads/main";
+        try {
+            GitRepositoryResourceDescriptor.Builder builder = new GitRepositoryResourceDescriptor.Builder(repoUrl);
+            builder.ref(ref);
+            GitRepositoryResourceDescriptor descriptor = builder.build();
+
+            assertEquals(repoUrl, descriptor.getGitRepoUrl(), "Git repo URL did not match expected value.");
+            assertEquals(ref, descriptor.getRef(), "Ref did not match the expected value.");
+            assertEquals(expectedGitRepoUri, descriptor.getUri(), "URI did not match the expected value.");
+
+            DigestSet digest = descriptor.getDigest();
+            assertNotNull(digest, "Digest set should not have been null but was.");
+            JsonObject digestJson = digest.build();
+            assertTrue(digestJson.isEmpty(), "Digest set should have been empty but was: " + digestJson);
+
+            assertNull(descriptor.getName(), "Name should have been null but was: " + descriptor.getName());
+            assertNull(descriptor.getContent(), "Content should have been null but was: " + descriptor.getContent());
+            assertNull(descriptor.getDownloadLocation(), "Download location should have been null but was: " + descriptor.getDownloadLocation());
+            assertNull(descriptor.getMediaType(), "Media type should have been null but was: " + descriptor.getMediaType());
+            assertNull(descriptor.getAnnotations(), "Annotations should have been null but were: " + descriptor.getAnnotations());
+
+            JsonObject descriptorJson = descriptor.toJson();
+            testUtils.assertJsonContainsOnlyExpectedStringEntry("GitRepositoryResourceDescriptor", descriptorJson, ResourceDescriptor.KEY_URI, expectedGitRepoUri);
+        } catch (Exception e) {
+            fail("Encountered unexpected exception: " + e);
+        }
+    }
+
+    @Test
+    public void test_refWithHttpsGitRepoUrl() {
+        final String repoUrl = "https://github.com/" + user + "/" + repoName +".git";
+        final String expectedGitRepoUri = "https://github.com/" + user + "/" + repoName;
+        final String ref = "refs/heads/main";
+        try {
+            GitRepositoryResourceDescriptor.Builder builder = new GitRepositoryResourceDescriptor.Builder(repoUrl);
+            builder.ref(ref);
+            GitRepositoryResourceDescriptor descriptor = builder.build();
+
+            assertEquals(repoUrl, descriptor.getGitRepoUrl(), "Git repo URL did not match expected value.");
+            assertEquals(ref, descriptor.getRef(), "Ref did not match the expected value.");
+            assertEquals(expectedGitRepoUri, descriptor.getUri(), "URI did not match the expected value.");
+        } catch (Exception e) {
+            fail("Encountered unexpected exception: " + e);
+        }
+    }
+    @Test
+    public void test_refWithHttpIbmGitRepoUrl() {
+        final String repoUrl = "http://github.ibm.com/" + user + "/" + repoName +".git";
+        final String expectedGitRepoUri = "https://github.com/" + user + "/" + repoName;
+        final String ref = "refs/heads/main";
+        try {
+            GitRepositoryResourceDescriptor.Builder builder = new GitRepositoryResourceDescriptor.Builder(repoUrl);
+            builder.ref(ref);
+            GitRepositoryResourceDescriptor descriptor = builder.build();
+
+            assertEquals(repoUrl, descriptor.getGitRepoUrl(), "Git repo URL did not match expected value.");
+            assertEquals(ref, descriptor.getRef(), "Ref did not match the expected value.");
+            assertEquals(expectedGitRepoUri, descriptor.getUri(), "URI did not match the expected value.");
+        } catch (Exception e) {
+            fail("Encountered unexpected exception: " + e);
+        }
+    }
+    
+
 }
