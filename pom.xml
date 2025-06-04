@@ -1,18 +1,17 @@
 <?xml version='1.0' encoding='utf-8'?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <scm>
         <connection>scm:git:https://github.com/WASdev/intoto4j.git</connection>
         <developerConnection>scm:git:https://github.com/WASdev/intoto4j.git</developerConnection>
         <url>https://github.com/WASdev/intoto4j</url>
-        <tag>HEAD</tag>
+        <tag>V3.0.2</tag>
     </scm>
 
     <groupId>com.ibm.websphere.appserver.features</groupId>
     <artifactId>intoto4j</artifactId>
-    <version>3.0.2-SNAPSHOT</version>
+    <version>3.0.2</version>
 
     <name>intoto4j</name>
     <description>The intoto4j library provides Java tools and classes for generating artifacts consistent with the in-toto (https://in-toto.io/) framework.</description>
